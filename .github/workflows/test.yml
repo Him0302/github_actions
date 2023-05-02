@@ -6,8 +6,24 @@ on:
       - main
       
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+         aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+         aws-region: us-east-1
+  
+      - name: Deploy to my EC2 instance
+        uses: easingthemes/ssh-deploy@v2.1.5
+        env:
+         SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY}}
+         SOURCE: "./"
+         REMOTE_HOST: "52.1.249.47"
+         REMOTE_USER: "ubuntu"
+         TARGET: "/var/www/html"
