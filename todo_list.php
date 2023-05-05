@@ -1,8 +1,8 @@
 
 <?php
-$user = "user";
+$user = "example_user";
 $password = "password";
-$database = "example";
+$database = "example_database";
 $table = "todo_list";
 
 try {
